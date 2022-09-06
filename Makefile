@@ -28,11 +28,14 @@ obj = $(src:.cpp=.o)
 
 
 # Control Flow
-.Phony = game ext_objs cleanBuild cleanObj run all
+.Phony = game ext_objs cleanBuild cleanObj run all launch
 
 run: all
 
-all: cleanBuild ext_objs game cleanObj
+all: cleanBuild ext_objs game cleanObj launch
+
+launch:
+	src/game
 
 cleanBuild:
 	rm -f src/game.exe
@@ -41,7 +44,7 @@ cleanObj:
 ext_objs:
 	clang++ -o src/glad.o -c src/glad.c $(compiler_flags) $(vendor_includes)
 game: $(obj)
-	clang++ -o src/game $^ $(libs)
+	clang++ -o src/game $^ src/glad.o $(libs)
 %.o: %.cpp
 	clang++ -o $@ -c $< $(compiler_flags) $(vendor_includes)
 
