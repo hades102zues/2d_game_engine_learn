@@ -18,5 +18,6 @@ int main(int argc, char** argv) {
         /* Poll for and process events */
         glfwPollEvents();
     }
+	window->~Window();
 	return 0;
 }

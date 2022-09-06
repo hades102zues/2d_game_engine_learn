@@ -32,7 +32,7 @@ obj = $(src:.cpp=.o)
 
 run: all
 
-all: cleanBuild ext_objs game cleanObj launch
+all: cleanObj cleanBuild ext_objs game cleanObj launch
 
 launch:
 	src/game
