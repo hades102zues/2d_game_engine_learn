@@ -28,11 +28,11 @@ obj = $(src:.cpp=.o)
 
 
 # Control Flow
-.Phony = game ext_objs cleanBuild cleanObj run all launch
+.PHONY = ext_objs cleanBuild cleanObj run all launch
 
 run: all
 
-all: cleanObj cleanBuild ext_objs game cleanObj launch
+all: cleanObj cleanBuild ext_objs game launch cleanObj
 
 launch:
 	src/game

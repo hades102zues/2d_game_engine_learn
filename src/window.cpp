@@ -2,17 +2,30 @@
 #include <glad/glad.h>
 #include "window.h"
 #include <iostream>
+#include "mouse.h"
 
+Mouse* mouse;
 
 void Window::framebuffer_resize(GLFWwindow* glWindow, int width, int height) {
     glViewport(0, 0, width, height);
 }
+void Window::glfw_mouse_pos_callback(GLFWwindow* window, double xpos, double ypos){
+    mouse->mouse_pos_callback(window, xpos, ypos);
+}
+void Window::glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+    mouse->mouse_button_callback(window, button, action, mods);
+}
+void Window::glfw_mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    mouse->mouse_scroll_callback(window, xoffset, yoffset);
+}
+
 
 Window::Window() {
     this->height = 600;
     this->width = 800;
     this->name = "GAME";
     this->glWindow = NULL;
+    mouse = new Mouse();
     
     if (!glfwInit()) {
         std::cout << "GLFW_FAIL_INIT" << std::endl;
@@ -41,6 +54,9 @@ Window::Window() {
     glfwGetFramebufferSize(this->glWindow, &this->width, &this->height);
     glViewport(0, 0, this->width, this->height);
     glfwSetFramebufferSizeCallback(this->glWindow, framebuffer_resize);
+    glfwSetCursorPosCallback(this->glWindow, glfw_mouse_pos_callback);
+    glfwSetMouseButtonCallback(this->glWindow, glfw_mouse_button_callback);
+    glfwSetScrollCallback(this->glWindow, glfw_mouse_scroll_callback);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
 
 }
@@ -48,15 +64,6 @@ Window::Window() {
 Window::~Window() {
     glfwTerminate();
 }
-
-// Window Window::get() {
-//     if (!this->window) {
-        
-//     }
-
-//     return this->window;
-// }
-
 
 
 void Window::loop() {
