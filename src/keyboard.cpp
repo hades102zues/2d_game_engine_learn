@@ -10,14 +10,15 @@ void Keyboard::key_callback(GLFWwindow* window, int key,  int scancode, int act,
         std::cout<< "UNHANDLED_KEY_" << key << std::endl;
         return;
     }
-    if (key == GLFW_PRESS) {
+    if (act == GLFW_PRESS) {
         this->keyBucket[key] = true;
+        if (key == GLFW_KEY_ESCAPE) {
+            glfwSetWindowShouldClose(window, true);
+        }
     }
-    if (key == GLFW_RELEASE) {
+    if (act == GLFW_RELEASE) {
         this->keyBucket[key] = false;
     }
-    if (key == GLFW_KEY_ESCAPE) {
-        glfwSetWindowShouldClose(window, true);
-    }
+
 }
 Keyboard::~Keyboard(){}
