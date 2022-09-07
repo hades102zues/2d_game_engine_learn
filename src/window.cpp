@@ -4,26 +4,26 @@
 #include <iostream>
 #include "mouse.h"
 
-Mouse* mouse;
+static Mouse* mouse;
 
-void Window::framebuffer_resize(GLFWwindow* glWindow, int width, int height) {
+static void framebuffer_resize(GLFWwindow* glWindow, int width, int height) {
     glViewport(0, 0, width, height);
 }
-void Window::glfw_mouse_pos_callback(GLFWwindow* window, double xpos, double ypos){
+static void glfw_mouse_pos_callback(GLFWwindow* window, double xpos, double ypos){
     mouse->mouse_pos_callback(window, xpos, ypos);
 }
-void Window::glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+static void glfw_mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
     mouse->mouse_button_callback(window, button, action, mods);
 }
-void Window::glfw_mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+static void glfw_mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
     mouse->mouse_scroll_callback(window, xoffset, yoffset);
 }
 
 
-Window::Window() {
+Window::Window(std::string name) {
     this->height = 600;
     this->width = 800;
-    this->name = "GAME";
+    this->name = name;
     this->glWindow = NULL;
     mouse = new Mouse();
     

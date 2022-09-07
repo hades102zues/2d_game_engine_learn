@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv) {
 
-	Window* window = new Window();
+	Window* window = new Window("GAME");
 
 	while (!glfwWindowShouldClose(window->glWindow))
     {
@@ -18,6 +18,6 @@ int main(int argc, char** argv) {
         /* Poll for and process events */
         glfwPollEvents();
     }
-	window->~Window();
+	delete window;
 	return 0;
 }
