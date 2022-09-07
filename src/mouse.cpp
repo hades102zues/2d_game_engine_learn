@@ -12,6 +12,7 @@ Mouse::Mouse() {
     this->scrollY = 0.0f;
     this->firstMove = true;
     this->isDragging = false;
+    std::cout<< "MOUSE_INIT" << std::endl;
 }
 
 
@@ -81,4 +82,8 @@ bool Mouse::isMouseButtonDown(int button) {
     }
 
     return this->mousePress[button];
+}
+
+Mouse::~Mouse() {
+    std::cout << "MOUSE_DESTROYED" <<std::endl;
 }

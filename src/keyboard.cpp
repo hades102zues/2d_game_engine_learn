@@ -24,4 +24,6 @@ void Keyboard::key_callback(GLFWwindow* window, int key,  int scancode, int act,
     }
 
 }
-Keyboard::~Keyboard(){}
+Keyboard::~Keyboard() {
+    std::cout << "KEYBOARD_DESTROYED" <<std::endl;
+}

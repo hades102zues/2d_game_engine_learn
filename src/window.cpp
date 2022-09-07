@@ -32,7 +32,7 @@ Window::Window(std::string name) {
     this->glWindow = NULL;
     mouse = new Mouse();
     keyboard = new Keyboard();
-    
+
     if (!glfwInit()) {
         std::cout << "GLFW_FAIL_INIT" << std::endl;
         exit(-1);
@@ -69,12 +69,14 @@ Window::Window(std::string name) {
 
     // ==Keyboard Callback==
     glfwSetKeyCallback(this->glWindow, glfw_key_callback);
-    
+    std::cout<< "WINDOW_INIT" << std::endl;
 
 }
 
 Window::~Window() {
     glfwTerminate();
+    delete mouse, keyboard;
+    std::cout << "WINDOW_DESTROYED" <<std::endl;
 }
 
 
