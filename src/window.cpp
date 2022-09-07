@@ -31,6 +31,7 @@ Window::Window(std::string name) {
     this->name = name;
     this->glWindow = NULL;
     mouse = new Mouse();
+    keyboard = new Keyboard();
     
     if (!glfwInit()) {
         std::cout << "GLFW_FAIL_INIT" << std::endl;
