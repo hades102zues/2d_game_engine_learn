@@ -1,10 +1,12 @@
 
 #include <glad/glad.h>
 #include "window.h"
+#include "keyboard.h"
 #include <iostream>
 #include "mouse.h"
 
 static Mouse* mouse;
+static Keyboard* keyboard;
 
 static void framebuffer_resize(GLFWwindow* glWindow, int width, int height) {
     glViewport(0, 0, width, height);
@@ -17,6 +19,9 @@ static void glfw_mouse_button_callback(GLFWwindow* window, int button, int actio
 }
 static void glfw_mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
     mouse->mouse_scroll_callback(window, xoffset, yoffset);
+}
+static void glfw_key_callback(GLFWwindow* window, int key,  int scancode, int act, int mods) {
+    keyboard->key_callback(window, key, scancode, act, mods);
 }
 
 
@@ -50,14 +55,20 @@ Window::Window(std::string name) {
 		std::cout << "GLAD_FAIL_INIT" << std::endl;
 		exit(-1);
 	}
-
-    glfwGetFramebufferSize(this->glWindow, &this->width, &this->height);
+    // ==Viewport==
     glViewport(0, 0, this->width, this->height);
+    glfwGetFramebufferSize(this->glWindow, &this->width, &this->height);
     glfwSetFramebufferSizeCallback(this->glWindow, framebuffer_resize);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
+
+    // ==Mouse Callbacks==
     glfwSetCursorPosCallback(this->glWindow, glfw_mouse_pos_callback);
     glfwSetMouseButtonCallback(this->glWindow, glfw_mouse_button_callback);
     glfwSetScrollCallback(this->glWindow, glfw_mouse_scroll_callback);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
+
+    // ==Keyboard Callback==
+    glfwSetKeyCallback(this->glWindow, glfw_key_callback);
+    
 
 }
 
