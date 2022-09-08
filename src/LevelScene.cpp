@@ -9,6 +9,6 @@ LevelScene::~LevelScene() {
 
 }
 
-void LevelScene::update(float dt) {
+void LevelScene::update(float dt, Keyboard* keyboard, Window &window) {
 
 }

@@ -3,13 +3,12 @@
 
 #include <GLFW/glfw3.h>
 #include <string>
-#include "Scene.hpp"
-
 
 class Window {
 
     private:
         int height, width;
+        float r, g, b, a;
         std::string name;
         // static void framebuffer_resize(GLFWwindow* window, int width, int height);
         // static void glfw_mouse_pos_callback(GLFWwindow* window, double xpos, double ypos);
@@ -22,7 +21,5 @@ class Window {
         Window(std::string name);
         ~Window();
         void loop();
-        void changeScene(int sceneCode, Scene* currentScene);
-        //Window get();
 
 };

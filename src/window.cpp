@@ -2,17 +2,21 @@
 #include <glad/glad.h>
 #include <iostream>
 
-
-#include "Mouse.hpp"
 #include "Window.hpp"
-#include "Keyboard.hpp"
 #include "Scene.hpp"
+#include "Mouse.hpp"
+#include "Keyboard.hpp"
 #include "LevelEditorScene.hpp"
 #include "LevelScene.hpp"
 
 
 static Mouse* mouse;
 static Keyboard* keyboard;
+// static int r = 1;
+// static int g = 1;
+// static int b = 1;
+// static int a = 1;
+
 
 
 static void framebuffer_resize(GLFWwindow* glWindow, int width, int height) {
@@ -30,7 +34,21 @@ static void glfw_mouse_scroll_callback(GLFWwindow* window, double xoffset, doubl
 static void glfw_key_callback(GLFWwindow* window, int key,  int scancode, int act, int mods) {
     keyboard->key_callback(window, key, scancode, act, mods);
 }
+static void changeScene(int sceneCode, Scene* &currentScene) {
+    switch (sceneCode) {
+        case 0:
+            currentScene = new LevelEditorScene();
+            break;
+        case 1:
+            currentScene = new LevelScene();
+            break;
+        default:
+            //assertion
+            std::cout<< "UNRECOGNIZED_SCENE";
+            break;
 
+    }
+}
 
 
 Window::Window(std::string name) {
@@ -38,9 +56,14 @@ Window::Window(std::string name) {
     this->width = 800;
     this->name = name;
     this->glWindow = NULL;
+    this->r = 1.0f;
+    this->g = 1.0f;
+    this->b = 1.0f;
+    this->a = 1.0f;
     mouse = new Mouse();
     keyboard = new Keyboard();
-    Scene* currentScene;
+
+
 
 
     if (!glfwInit()) {
@@ -70,7 +93,7 @@ Window::Window(std::string name) {
     glViewport(0, 0, this->width, this->height);
     glfwGetFramebufferSize(this->glWindow, &this->width, &this->height);
     glfwSetFramebufferSizeCallback(this->glWindow, framebuffer_resize);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
+    glClearColor(this->r, this->g, this->b, this->a); 
 
     // ==Mouse Callbacks==
     glfwSetCursorPosCallback(this->glWindow, glfw_mouse_pos_callback);
@@ -91,6 +114,7 @@ Window::~Window() {
 
 
 void Window::loop() {
+    Scene* currentScene;
     float currentFrameTime;
     float lastFrameTime;
     float dt;
@@ -98,14 +122,21 @@ void Window::loop() {
     // Note that gabe is doing time relative to when the application starts
     // Just a thought-- should things need refactoring later
     lastFrameTime = (float) glfwGetTime();
+    currentFrameTime = lastFrameTime;
+    dt = currentFrameTime - lastFrameTime;
+    changeScene(0, currentScene);
 
 	while (!glfwWindowShouldClose(this->glWindow))
     {
-        /* Poll for and process events */
-        glfwPollEvents();
 
-        /* Render here */
+        glfwPollEvents();
         glClear(GL_COLOR_BUFFER_BIT);
+
+        if (dt > 0 ) {
+            currentScene->update(dt, keyboard, *this);
+        }
+
+
 
         /* Swap front and back buffers */
         glfwSwapBuffers(this->glWindow);
@@ -117,15 +148,3 @@ void Window::loop() {
     }
 }
 
-void Window::changeScene(int sceneCode, Scene* &currentScene) {
-    switch (sceneCode) {
-        case 0:
-            currentScene = new LevelEditorScene();
-            break;
-        case 1:
-            currentScene = new LevelScene();
-            break;
-        default:
-
-    }
-}
