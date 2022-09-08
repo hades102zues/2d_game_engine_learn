@@ -24,6 +24,14 @@ void Keyboard::key_callback(GLFWwindow* window, int key,  int scancode, int act,
     }
 
 }
+
+bool Keyboard::isKeyPressed(int keyCode) {
+    if (keyCode < sizeof(keyBucket)/sizeof(bool)) {
+        return  keyBucket[keyCode];
+    } else {
+        return false;
+    }
+}
 Keyboard::~Keyboard() {
     std::cout << "KEYBOARD_DESTROYED" <<std::endl;
 }

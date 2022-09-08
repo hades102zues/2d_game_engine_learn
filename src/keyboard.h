@@ -7,4 +7,5 @@ class Keyboard {
         Keyboard();
         ~Keyboard();
         void key_callback(GLFWwindow* window, int key,  int scancode, int act, int mods);
+        bool isKeyPressed(int keyCode);
 };
