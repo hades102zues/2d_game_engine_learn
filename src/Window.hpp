@@ -8,7 +8,7 @@ class Window {
 
     private:
         int height, width;
-        float r, g, b, a;
+        
         std::string name;
         // static void framebuffer_resize(GLFWwindow* window, int width, int height);
         // static void glfw_mouse_pos_callback(GLFWwindow* window, double xpos, double ypos);
@@ -17,9 +17,11 @@ class Window {
 
     public:
         GLFWwindow* glWindow;
+        float r, g, b, a;
 
         Window(std::string name);
         ~Window();
         void loop();
+        void changeSceneHandler(int sceneCode);
 
 };

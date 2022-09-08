@@ -12,6 +12,7 @@
 
 static Mouse* mouse;
 static Keyboard* keyboard;
+static Scene* currentScene;
 // static int r = 1;
 // static int g = 1;
 // static int b = 1;
@@ -34,7 +35,13 @@ static void glfw_mouse_scroll_callback(GLFWwindow* window, double xoffset, doubl
 static void glfw_key_callback(GLFWwindow* window, int key,  int scancode, int act, int mods) {
     keyboard->key_callback(window, key, scancode, act, mods);
 }
-static void changeScene(int sceneCode, Scene* &currentScene) {
+
+static void changeScene(int sceneCode) {
+
+
+    if (currentScene != NULL)
+        delete currentScene;
+
     switch (sceneCode) {
         case 0:
             currentScene = new LevelEditorScene();
@@ -46,9 +53,9 @@ static void changeScene(int sceneCode, Scene* &currentScene) {
             //assertion
             std::cout<< "UNRECOGNIZED_SCENE";
             break;
-
     }
 }
+
 
 
 Window::Window(std::string name) {
@@ -62,7 +69,8 @@ Window::Window(std::string name) {
     this->a = 1.0f;
     mouse = new Mouse();
     keyboard = new Keyboard();
-
+    currentScene = NULL;
+    changeScene(0);
 
 
 
@@ -108,13 +116,14 @@ Window::Window(std::string name) {
 
 Window::~Window() {
     glfwTerminate();
-    delete mouse, keyboard;
+    delete mouse;
+    delete keyboard;
     std::cout << "WINDOW_DESTROYED" <<std::endl;
 }
 
 
 void Window::loop() {
-    Scene* currentScene;
+    
     float currentFrameTime;
     float lastFrameTime;
     float dt;
@@ -124,7 +133,7 @@ void Window::loop() {
     lastFrameTime = (float) glfwGetTime();
     currentFrameTime = lastFrameTime;
     dt = currentFrameTime - lastFrameTime;
-    changeScene(0, currentScene);
+    
 
 	while (!glfwWindowShouldClose(this->glWindow))
     {
@@ -146,5 +155,9 @@ void Window::loop() {
         dt = currentFrameTime - lastFrameTime;
         lastFrameTime = currentFrameTime;
     }
+}
+
+void Window::changeSceneHandler(int sceneCode) {
+    changeScene(sceneCode);
 }
 
