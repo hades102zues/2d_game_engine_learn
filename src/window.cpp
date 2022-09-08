@@ -1,12 +1,19 @@
 
 #include <glad/glad.h>
-#include "window.h"
-#include "keyboard.h"
 #include <iostream>
-#include "mouse.h"
+
+
+#include "Mouse.hpp"
+#include "Window.hpp"
+#include "Keyboard.hpp"
+#include "Scene.hpp"
+#include "LevelEditorScene.hpp"
+#include "LevelScene.hpp"
+
 
 static Mouse* mouse;
 static Keyboard* keyboard;
+
 
 static void framebuffer_resize(GLFWwindow* glWindow, int width, int height) {
     glViewport(0, 0, width, height);
@@ -25,6 +32,7 @@ static void glfw_key_callback(GLFWwindow* window, int key,  int scancode, int ac
 }
 
 
+
 Window::Window(std::string name) {
     this->height = 600;
     this->width = 800;
@@ -32,6 +40,8 @@ Window::Window(std::string name) {
     this->glWindow = NULL;
     mouse = new Mouse();
     keyboard = new Keyboard();
+    Scene* currentScene;
+
 
     if (!glfwInit()) {
         std::cout << "GLFW_FAIL_INIT" << std::endl;
@@ -81,15 +91,41 @@ Window::~Window() {
 
 
 void Window::loop() {
-    while (!glfwWindowShouldClose(this->glWindow))
+    float currentFrameTime;
+    float lastFrameTime;
+    float dt;
+
+    // Note that gabe is doing time relative to when the application starts
+    // Just a thought-- should things need refactoring later
+    lastFrameTime = (float) glfwGetTime();
+
+	while (!glfwWindowShouldClose(this->glWindow))
     {
+        /* Poll for and process events */
+        glfwPollEvents();
+
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(this->glWindow);
 
-        /* Poll for and process events */
-        glfwPollEvents();
+
+        currentFrameTime = (float) glfwGetTime(); 
+        dt = currentFrameTime - lastFrameTime;
+        lastFrameTime = currentFrameTime;
+    }
+}
+
+void Window::changeScene(int sceneCode, Scene* &currentScene) {
+    switch (sceneCode) {
+        case 0:
+            currentScene = new LevelEditorScene();
+            break;
+        case 1:
+            currentScene = new LevelScene();
+            break;
+        default:
+
     }
 }

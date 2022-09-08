@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 #include <string>
-
+#include "Scene.hpp"
 
 
 class Window {
@@ -22,6 +22,7 @@ class Window {
         Window(std::string name);
         ~Window();
         void loop();
+        void changeScene(int sceneCode, Scene* currentScene);
         //Window get();
 
 };
