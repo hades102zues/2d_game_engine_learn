@@ -4,7 +4,7 @@
 
 class LevelScene : public Scene {
     public:
-        LevelScene();
+        LevelScene(Window &window);
         ~LevelScene();
         virtual void update(float dt, Keyboard* keyboard, Window &window);
 };

@@ -2,6 +2,7 @@
 
 #include "Keyboard.hpp"
 #include "Window.hpp"
+#include <iostream>
 
 class Scene {
     protected:
@@ -9,7 +10,7 @@ class Scene {
         float timeToChangeScene;
     public:
         Scene(){};
-        ~Scene(){};
+        virtual ~Scene(){};
         virtual void update(float dt, Keyboard* keyboard, Window& window) = 0;
         
 };

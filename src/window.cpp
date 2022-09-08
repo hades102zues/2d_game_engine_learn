@@ -1,6 +1,7 @@
 
 #include <glad/glad.h>
 #include <iostream>
+#include <memory>
 
 #include "Window.hpp"
 #include "Scene.hpp"
@@ -36,24 +37,31 @@ static void glfw_key_callback(GLFWwindow* window, int key,  int scancode, int ac
     keyboard->key_callback(window, key, scancode, act, mods);
 }
 
-static void changeScene(int sceneCode) {
+static void changeScene(int sceneCode, Window &window) {
 
+    std::cout<< "Changing Scene function spinning...." << std::endl;
 
-    if (currentScene != NULL)
-        delete currentScene;
+    Scene* clearPtr;
+    if (currentScene != nullptr)
+        clearPtr = currentScene;
 
     switch (sceneCode) {
         case 0:
-            currentScene = new LevelEditorScene();
+
+            currentScene = new LevelEditorScene(window);
             break;
         case 1:
-            currentScene = new LevelScene();
+            currentScene = new LevelScene(window);
             break;
         default:
             //assertion
             std::cout<< "UNRECOGNIZED_SCENE";
             break;
     }
+    
+    std::cout<< "Current Scene: " << currentScene << std::endl;
+    std::cout<< "Destroying Past Scene: " << clearPtr << std::endl;
+    delete clearPtr;
 }
 
 
@@ -70,7 +78,7 @@ Window::Window(std::string name) {
     mouse = new Mouse();
     keyboard = new Keyboard();
     currentScene = NULL;
-    changeScene(0);
+
 
 
 
@@ -133,7 +141,8 @@ void Window::loop() {
     lastFrameTime = (float) glfwGetTime();
     currentFrameTime = lastFrameTime;
     dt = currentFrameTime - lastFrameTime;
-    
+    changeScene(0, *this);
+
 
 	while (!glfwWindowShouldClose(this->glWindow))
     {
@@ -158,6 +167,6 @@ void Window::loop() {
 }
 
 void Window::changeSceneHandler(int sceneCode) {
-    changeScene(sceneCode);
+    changeScene(sceneCode, *this);
 }
 

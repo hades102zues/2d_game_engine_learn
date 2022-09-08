@@ -2,13 +2,18 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-LevelEditorScene::LevelEditorScene() {
+LevelEditorScene::LevelEditorScene(Window &window) {
+    std::cout<< "LevelEditor Scene started" << std::endl;
     this->changingScene = false;
     this->timeToChangeScene = 2.0f;
+    window.r = 1.0f;
+    window.g = 1.0f;
+    window.b = 1.0f;
+    window.a = 1.0f;
 }
 
 LevelEditorScene::~LevelEditorScene() {
-
+    std::cout<< "Destroying Level Editor Scene" << std::endl;
 }
 
 void LevelEditorScene::update(float dt, Keyboard* keyboard, Window &window) {
@@ -33,6 +38,5 @@ void LevelEditorScene::update(float dt, Keyboard* keyboard, Window &window) {
     else if (this->changingScene) { 
         std::cout << "Changing Scene from levelEditor" << std::endl;
         window.changeSceneHandler(1);
-       
     }
 }
