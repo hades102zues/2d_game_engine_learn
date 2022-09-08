@@ -6,10 +6,9 @@ LevelEditorScene::LevelEditorScene(Window &window) {
     std::cout<< "LevelEditor Scene started" << std::endl;
     this->changingScene = false;
     this->timeToChangeScene = 2.0f;
-    window.r = 1.0f;
-    window.g = 1.0f;
-    window.b = 1.0f;
-    window.a = 1.0f;
+    window.r = 0.25f;
+    window.g = 0.21f;
+    window.b = 0.41f;
 }
 
 LevelEditorScene::~LevelEditorScene() {

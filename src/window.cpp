@@ -148,6 +148,7 @@ void Window::loop() {
     {
 
         glfwPollEvents();
+        glClearColor(this->r, this->g, this->b, this->a); 
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (dt > 0 ) {

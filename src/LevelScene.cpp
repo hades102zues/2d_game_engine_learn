@@ -7,9 +7,9 @@ LevelScene::LevelScene(Window &window) {
     std::cout<< "Level Scene started" << std::endl;
     this->changingScene = false;
     this->timeToChangeScene = 2.0f;
-    window.r = 1.0f;
-    window.g = 1.0f;
-    window.b = 1.0f;
+    window.r = 0.2f;
+    window.g = 0.3f;
+    window.b = 0.3f;
     window.a = 1.0f;
 }
 
