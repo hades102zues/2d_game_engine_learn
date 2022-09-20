@@ -10,6 +10,7 @@ class Scene {
         float timeToChangeScene;
     public:
         Scene(){};
+        void init(){};
         virtual ~Scene(){};
         virtual void update(float dt, Keyboard* keyboard, Window& window) = 0;
         

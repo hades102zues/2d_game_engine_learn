@@ -49,9 +49,11 @@ static void changeScene(int sceneCode, Window &window) {
         case 0:
 
             currentScene = new LevelEditorScene(window);
+            currentScene->init();
             break;
         case 1:
             currentScene = new LevelScene(window);
+            currentScene->init();
             break;
         default:
             //assertion

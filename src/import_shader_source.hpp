@@ -1,3 +1,5 @@
+#pragma  once
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -5,9 +7,9 @@
 
 
 
-char* readFromShaderFile(char* path, char* intent) {
+const char* readFromShaderFile(char* path, char* intent) {
     std::ifstream fStream;
-    std::sstream  sStream;
+    std::stringstream  sStream;
     std::string mString;
 
 
@@ -23,7 +25,8 @@ char* readFromShaderFile(char* path, char* intent) {
         std::cout << "ERROR_READING_SHADER_SOURCE: " << intent << std::endl;
 
     }
+    const char* cString = mString.c_str();
 
-    return mString.c_str();
+    return cString;
 
 }
