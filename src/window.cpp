@@ -106,10 +106,11 @@ Window::Window(std::string name) {
 		exit(-1);
 	}
     // ==Viewport==
-    glViewport(0, 0, this->width, this->height);
     glfwGetFramebufferSize(this->glWindow, &this->width, &this->height);
+    glViewport(0, 0, this->width, this->height);
     glfwSetFramebufferSizeCallback(this->glWindow, framebuffer_resize);
     glClearColor(this->r, this->g, this->b, this->a); 
+    glfwSwapInterval(1); //v-sync: locks fps to that of display
 
     // ==Mouse Callbacks==
     glfwSetCursorPosCallback(this->glWindow, glfw_mouse_pos_callback);
@@ -150,6 +151,7 @@ void Window::loop() {
         glfwPollEvents();
         glClearColor(this->r, this->g, this->b, this->a); 
         glClear(GL_COLOR_BUFFER_BIT);
+        std::cout<< "FPS: " << 1.0f/dt << std::endl;
 
         if (dt > 0 ) {
             currentScene->update(dt, keyboard, *this);
