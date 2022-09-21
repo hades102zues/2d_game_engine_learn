@@ -6,11 +6,16 @@
 
 class LevelEditorScene : public Scene {
     private:
-        const char* vertexSource;
-        const char* fragmentSource;
+        char* vertexSource;
+        char* fragmentSource;
+
         unsigned int vertexID;
         unsigned int fragmentID;
         unsigned int shaderProgramID;
+
+        unsigned int vaoID;
+        unsigned int vboID;
+        unsigned int eboID;
 
     public:
         LevelEditorScene(Window &window);

@@ -7,7 +7,7 @@
 
 
 
-const char* readFromShaderFile(char* path, char* intent) {
+char* readFromShaderFile(char* path, char* intent) {
     std::ifstream fStream;
     std::stringstream  sStream;
     std::string mString;
@@ -20,13 +20,16 @@ const char* readFromShaderFile(char* path, char* intent) {
         sStream << fStream.rdbuf();
         mString = sStream.str();
 
+
     }
     catch (std::ifstream::failure e) {
         std::cout << "ERROR_READING_SHADER_SOURCE: " << intent << std::endl;
+        std::cerr << "Error: " << strerror(errno) <<std::endl;
+
 
     }
-    const char* cString = mString.c_str();
-
-    return cString;
+  
+   
+    return strdup(mString.c_str());
 
 }

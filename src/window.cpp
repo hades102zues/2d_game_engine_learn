@@ -47,7 +47,6 @@ static void changeScene(int sceneCode, Window &window) {
 
     switch (sceneCode) {
         case 0:
-
             currentScene = new LevelEditorScene(window);
             currentScene->init();
             break;
@@ -123,6 +122,9 @@ Window::Window(std::string name) {
     glfwSetKeyCallback(this->glWindow, glfw_key_callback);
     std::cout<< "WINDOW_INIT" << std::endl;
 
+    // ====Pipeline Error====
+    
+
 }
 
 Window::~Window() {
@@ -145,7 +147,7 @@ void Window::loop() {
     currentFrameTime = lastFrameTime;
     dt = currentFrameTime - lastFrameTime;
     changeScene(0, *this);
-
+  
 
 	while (!glfwWindowShouldClose(this->glWindow))
     {
@@ -153,10 +155,11 @@ void Window::loop() {
         glfwPollEvents();
         glClearColor(this->r, this->g, this->b, this->a); 
         glClear(GL_COLOR_BUFFER_BIT);
-        std::cout<< "FPS: " << 1.0f/dt << std::endl;
+        //std::cout<< "FPS: " << 1.0f/dt << std::endl;
 
         if (dt > 0 ) {
             currentScene->update(dt, keyboard, *this);
+            
         }
 
 
