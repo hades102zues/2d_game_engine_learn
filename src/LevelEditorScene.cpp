@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "import_shader_source.hpp"
+#include "Shader.hpp"
 
 
 static const float vertexData1[] = {
@@ -36,65 +37,25 @@ unsigned int elementBuffer[] = {
 
 
 LevelEditorScene::LevelEditorScene(Window &window) {
+
     std::cout<< "LevelEditor Scene started" << std::endl;
     // this->changingScene = false;
     // this->timeToChangeScene = 2.0f;
     window.r = 0.25f;
     window.g = 0.21f;
     window.b = 0.41f;
+    this->defaultShader = nullptr;
+    
 
-    this->vertexSource = readFromShaderFile("src/assets/shaders/vertexShader.vs", "LEVEL_EDITOR_VSHADER");
-    this->fragmentSource = readFromShaderFile("src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR_FSHADER");
+
    
 }
 
 void LevelEditorScene::init() {
+    this->defaultShader = new Shader("src/assets/shaders/vertexShader.vs", "src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR");
+    this->defaultShader->compileShader();
 
-   
-
-    // -=====SHADER PROGRAM
-    
-   
-    this->vertexID = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(this->vertexID, 1, &this->vertexSource, NULL);
-    glCompileShader(this->vertexID);
-
-    const int logLength = 512;
-    int success;
-    char infoLog[512];
-
-    glGetShaderiv(this->vertexID, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(this->vertexID, 512, NULL, infoLog);
-        std::cout<< "LEVEL_EDITOR_ERROR_SHADER_VERTEX_COMIPILATION\n" << infoLog << std::endl;
-    }
-
-    this->fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(this->fragmentID, 1, &this->fragmentSource, NULL);
-    glCompileShader(this->fragmentID);
-
-    glGetShaderiv(this->fragmentID, GL_COMPILE_STATUS, &success);
-    if(!success) {
-        glGetShaderInfoLog(this->fragmentID, 512, NULL, infoLog);
-        std::cout<< "LEVEL_EDITOR_ERROR_SHADER_VERTEX_COMIPILATION\n" << infoLog << std::endl;
-    }
-
-    this->shaderProgramID = glCreateProgram();
-    glAttachShader(this->shaderProgramID, this->vertexID);
-    glAttachShader(this->shaderProgramID, this->fragmentID);
-    glLinkProgram(this->shaderProgramID);
-
-    glGetProgramiv(this->shaderProgramID, GL_LINK_STATUS, &success);
-     if (!success) {
-        glGetProgramInfoLog(this->vertexID, 512, NULL, infoLog);
-        std::cout<< "LEVEL_EDITOR_ERROR_SHADER_PROGRAM_LINKING\n" << infoLog << std::endl;
-    }
-
-    glDeleteShader(this->vertexID);
-    glDeleteShader(this->fragmentID);
-
-
-
+    std::cout<< "here"<<this->defaultShader<<std::endl;
     // -=====VERTEX BUFFERS
     glGenVertexArrays(1, &this->vaoID);
     glBindVertexArray(this->vaoID);
@@ -115,6 +76,8 @@ void LevelEditorScene::init() {
     // nothing at all will be drawn to the screen. 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+
+    
     
 
 }
@@ -124,16 +87,16 @@ LevelEditorScene::~LevelEditorScene() {
 
 void LevelEditorScene::update(float dt, Keyboard* keyboard, Window &window) {
 
-   
+
     // Ready the pipeline
-    glUseProgram(this->shaderProgramID);
+    this->defaultShader->useShader();
     glBindVertexArray(this->vaoID);
 
       glDrawElements(GL_TRIANGLES, sizeof(elementBuffer)/sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
        
     glBindVertexArray(0);
-    glUseProgram(0);
+    this->defaultShader->detachShader();
 
 
 

@@ -2,20 +2,17 @@
 
 
 #include "Scene.hpp"
+#include "Shader.hpp"
 
 
 class LevelEditorScene : public Scene {
     private:
-        char* vertexSource;
-        char* fragmentSource;
-
-        unsigned int vertexID;
-        unsigned int fragmentID;
-        unsigned int shaderProgramID;
 
         unsigned int vaoID;
         unsigned int vboID;
         unsigned int eboID;
+        Shader* defaultShader;
+        
 
     public:
         LevelEditorScene(Window &window);
