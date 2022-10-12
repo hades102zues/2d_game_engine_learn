@@ -53,9 +53,8 @@ LevelEditorScene::LevelEditorScene(Window &window) {
 
 void LevelEditorScene::init() {
     this->defaultShader = new Shader("src/assets/shaders/vertexShader.vs", "src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR");
-    this->defaultShader->compileShader();
 
-    std::cout<< "here"<<this->defaultShader<<std::endl;
+
     // -=====VERTEX BUFFERS
     glGenVertexArrays(1, &this->vaoID);
     glBindVertexArray(this->vaoID);

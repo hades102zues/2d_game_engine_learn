@@ -8,7 +8,8 @@ compiler_flags = -Wall -Wextra -g -std=c++20
 vendor_folder = src/vendors
 inc_glfw = $(vendor_folder)/glfw/include
 inc_glad = $(vendor_folder)/glad/include
-vendor_includes = -I$(inc_glfw) -I$(inc_glad)
+inc_glm = $(vendor_folder)/glm
+vendor_includes = -I$(inc_glfw) -I$(inc_glad) -I$(inc_glm)
 
 
 # Libraries

@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <string.h>
+#include <glm/gtc/type_ptr.hpp>
 
 
 static char* readFromShaderFile(char* path, std::string intent) {
@@ -41,6 +42,8 @@ Shader::Shader(char* vShaderPath, char* fShaderPath, std::string intent) {
     this->vertexSource = readFromShaderFile(vShaderPath, intent+"_VSHADER");
     this->fragmentSource = readFromShaderFile(fShaderPath, intent+"_FSHADER");
     this->programIntent = strdup(intent.c_str());
+
+    this->compileShader();
     
 }
 
@@ -94,4 +97,15 @@ void Shader::useShader() {
 
 void Shader::detachShader() {
     glUseProgram(0);
+}
+
+
+void Shader::uploadMat4f(char* name, glm::mat4 mt) {
+    int id = glGetUniformLocation(this->shaderProgramID, name);
+    glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(mt));
+}
+
+void Shader::uploadVec3f(char* name, glm::vec3 vc) {
+    int id = glGetUniformLocation(this->shaderProgramID, name);
+    glUniform3fv(id, 1, glm::value_ptr(vc));
 }
