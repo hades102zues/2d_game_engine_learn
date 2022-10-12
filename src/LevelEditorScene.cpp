@@ -55,7 +55,7 @@ LevelEditorScene::LevelEditorScene(Window &window) {
 
 void LevelEditorScene::init() {
     this->defaultShader = new Shader("src/assets/shaders/vertexShader.vs", "src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR");
-    this->camera = new Camera(glm::vec2(0.0f, 0.0f));
+    this->camera = new Camera(glm::vec2(0.5f, 0.5f));
 
     // -=====VERTEX BUFFERS
     glGenVertexArrays(1, &this->vaoID);

@@ -7,6 +7,7 @@ Camera::Camera(glm::vec2 position) {
     m_position = position;
     m_view = glm::mat4(1.0f);
     m_projection = glm::mat4(1.0f);
+    //this->adjustProjection();
 
 }
 
@@ -16,6 +17,7 @@ void Camera::adjustProjection() {
     //z-near 0.0f
     //z-far 100.f
     m_projection = glm::ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+    
 }
 
 glm::mat4 Camera::getViewMatrix() {
