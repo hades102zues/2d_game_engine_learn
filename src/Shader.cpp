@@ -101,11 +101,13 @@ void Shader::detachShader() {
 
 
 void Shader::uploadMat4f(char* name, glm::mat4 mt) {
+    // I don't have a proper way to check that the uniform was properly retrieved
     int id = glGetUniformLocation(this->shaderProgramID, name);
     glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(mt));
 }
 
 void Shader::uploadVec3f(char* name, glm::vec3 vc) {
+    // I don't have a proper way to check that the uniform was properly retrieved
     int id = glGetUniformLocation(this->shaderProgramID, name);
     glUniform3fv(id, 1, glm::value_ptr(vc));
 }

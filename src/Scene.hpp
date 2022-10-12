@@ -3,11 +3,14 @@
 #include "Keyboard.hpp"
 #include "Window.hpp"
 #include <iostream>
+#include "Camera.hpp"
 
 class Scene {
     protected:
         bool changingScene;
         float timeToChangeScene;
+        Camera* camera;
+
     public:
         Scene(){};
         

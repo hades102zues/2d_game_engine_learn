@@ -6,6 +6,8 @@
 #include <iostream>
 #include "import_shader_source.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
+#include <glm/glm.hpp>
 
 
 static const float vertexData1[] = {
@@ -53,7 +55,7 @@ LevelEditorScene::LevelEditorScene(Window &window) {
 
 void LevelEditorScene::init() {
     this->defaultShader = new Shader("src/assets/shaders/vertexShader.vs", "src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR");
-
+    this->camera = new Camera(glm::vec2(0.0f, 0.0f));
 
     // -=====VERTEX BUFFERS
     glGenVertexArrays(1, &this->vaoID);
@@ -89,6 +91,10 @@ void LevelEditorScene::update(float dt, Keyboard* keyboard, Window &window) {
 
     // Ready the pipeline
     this->defaultShader->useShader();
+    this->defaultShader->uploadMat4f("uProj", camera->getProjectionMatrix());
+    this->defaultShader->uploadMat4f("uView", camera->getViewMatrix());
+
+
     glBindVertexArray(this->vaoID);
 
       glDrawElements(GL_TRIANGLES, sizeof(elementBuffer)/sizeof(unsigned int), GL_UNSIGNED_INT, 0);

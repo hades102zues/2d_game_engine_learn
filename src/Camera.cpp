@@ -22,8 +22,10 @@ glm::mat4 Camera::getViewMatrix() {
 
     glm::vec3 arbitraryStepFromCamera = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 arbitraryCameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
     glm::vec3 cameraFront = glm::vec3(m_position.x, m_position.y, 20.0f) + arbitraryStepFromCamera;
-    m_view = glm::lookAt(m_position, cameraFront, arbitraryCameraUp);
+    glm::vec3 cameraPos3D = glm::vec3(m_position.x, m_position.y, 0.0f);
+    m_view = glm::lookAt(cameraPos3D, cameraFront, arbitraryCameraUp);
 
     return m_view;
 }
