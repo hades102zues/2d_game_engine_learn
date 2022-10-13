@@ -55,7 +55,7 @@ LevelEditorScene::LevelEditorScene(Window &window) {
 
 void LevelEditorScene::init() {
     this->defaultShader = new Shader("src/assets/shaders/vertexShader.vs", "src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR");
-    this->camera = new Camera(glm::vec2(0.5f, 0.5f));
+    this->camera = new Camera(glm::vec2(-0.0f, 0.0f));
 
     // -=====VERTEX BUFFERS
     glGenVertexArrays(1, &this->vaoID);
@@ -86,12 +86,17 @@ LevelEditorScene::~LevelEditorScene() {
     std::cout<< "Destroying Level Editor Scene" << std::endl;
 }
 
-void LevelEditorScene::update(float dt, Keyboard* keyboard, Window &window) {
+void LevelEditorScene::update(float dt, Keyboard* keyboard, Window& window) {
 
+    int winWidth;
+    int winHeight;
+    glfwGetFramebufferSize(window.glWindow, &winWidth, &winHeight);
+
+   
 
     // Ready the pipeline
     this->defaultShader->useShader();
-    this->defaultShader->uploadMat4f("uProj", camera->getProjectionMatrix());
+    this->defaultShader->uploadMat4f("uProj", camera->getProjectionMatrix(winHeight, winWidth));
     this->defaultShader->uploadMat4f("uView", camera->getViewMatrix());
 
 

@@ -18,5 +18,5 @@ class LevelEditorScene : public Scene {
         LevelEditorScene(Window &window);
         ~LevelEditorScene();
         void init();
-        virtual void update(float dt, Keyboard* keyboard, Window &window);
+        virtual void update(float dt, Keyboard* keyboard, Window& window);
 };

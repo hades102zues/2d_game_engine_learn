@@ -162,8 +162,6 @@ void Window::loop() {
             
         }
 
-
-
         /* Swap front and back buffers */
         glfwSwapBuffers(this->glWindow);
 

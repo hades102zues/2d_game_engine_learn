@@ -10,7 +10,7 @@ class Camera {
     public:
         Camera(glm::vec2 position);
         ~Camera();
-        void adjustProjection();
         glm::mat4 getViewMatrix();
-        glm::mat4 getProjectionMatrix();
+        void adjustProjection(int width, int height);
+        glm::mat4 getProjectionMatrix(int width, int height);
 };
