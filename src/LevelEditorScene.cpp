@@ -21,10 +21,10 @@ static const float vertexData1[] = {
 
 static const float vertexData[] = {
     //position              //color
-    0.5f, 0.5f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, //Top Right
-    0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f, //Bottom Right
-    -0.5f, -0.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, //Bottom left
-    -0.5f, 0.5f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f  //Top Left
+    0.1f, 0.1f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f,       1,1,     //Top Right
+    0.1f, -0.1f, 0.0f,      0.0f, 1.0f, 0.0f, 1.0f,      1,0,    //Bottom Right
+    -0.1f, -0.1f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f,    0,0,    //Bottom left
+    -0.1f, 0.1f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f,       0,1,    //Top Left
 
 };
 
@@ -70,13 +70,14 @@ void LevelEditorScene::init() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->eboID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elementBuffer), elementBuffer, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) 0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
-
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*) 0);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(7 * sizeof(float)));
     // note that when an enabled attrib does not receive data
     // nothing at all will be drawn to the screen. 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     
 }
@@ -90,8 +91,8 @@ void LevelEditorScene::update(float dt, Keyboard* keyboard, Window& window) {
     int winHeight;
     glfwGetFramebufferSize(window.glWindow, &winWidth, &winHeight);
 
-    //this->camera->m_position.x -= dt * 50.0f;
-    //this->camera->m_position.y -= dt * 20.0f;
+    //this->camera->m_position.x -= dt * 0.50f;
+    //this->camera->m_position.y -= dt * 0.20f;
 
     // Ready the pipeline
     this->defaultShader->useShader();
