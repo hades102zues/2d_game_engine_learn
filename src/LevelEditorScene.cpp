@@ -56,6 +56,7 @@ LevelEditorScene::LevelEditorScene(Window &window) {
 void LevelEditorScene::init() {
     this->defaultShader = new Shader("src/assets/shaders/vertexShader.vs", "src/assets/shaders/fragmentShader.fs", "LEVEL_EDITOR");
     this->camera = new Camera(glm::vec2(-0.0f, 0.0f));
+    m_defTex = new Texture("src/assets/texture/container.jpeg");
 
     // -=====VERTEX BUFFERS
     glGenVertexArrays(1, &this->vaoID);
@@ -100,6 +101,9 @@ void LevelEditorScene::update(float dt, Keyboard* keyboard, Window& window) {
     this->defaultShader->uploadMat4("uView", camera->getViewMatrix());
     this->defaultShader->uploadFloat("uTime", glfwGetTime());
 
+    glActiveTexture(GL_TEXTURE0);
+    m_defTex->use();
+
 
     glBindVertexArray(this->vaoID);
 
@@ -107,6 +111,7 @@ void LevelEditorScene::update(float dt, Keyboard* keyboard, Window& window) {
 
        
     glBindVertexArray(0);
+    m_defTex->detach();
     this->defaultShader->detachShader();
 
 

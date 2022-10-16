@@ -3,6 +3,8 @@
 
 #include "Scene.hpp"
 #include "Shader.hpp"
+#include "Texture.hpp"
+
 
 
 class LevelEditorScene : public Scene {
@@ -12,6 +14,7 @@ class LevelEditorScene : public Scene {
         unsigned int vboID;
         unsigned int eboID;
         Shader* defaultShader;
+        Texture* m_defTex;
         
 
     public:

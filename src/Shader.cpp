@@ -148,3 +148,4 @@ void Shader::uploadInt (char* name, GLint i) {
     this->useShader();
     glUniform1i(id, i);
 }
+
