@@ -44,6 +44,7 @@ Shader::Shader(char* vShaderPath, char* fShaderPath, std::string intent) {
     this->programIntent = strdup(intent.c_str());
 
     this->compileShader();
+    this->beingUsed = false;
     
 }
 
@@ -92,22 +93,58 @@ void Shader::compileShader() {
 }
 
 void Shader::useShader() {
-    glUseProgram(this->shaderProgramID);
+    if (!beingUsed) {
+        glUseProgram(this->shaderProgramID);
+        this->beingUsed = true;
+    }
+    
 }
 
 void Shader::detachShader() {
     glUseProgram(0);
+    this->beingUsed  = false;
 }
 
 
-void Shader::uploadMat4f(char* name, glm::mat4 mt) {
+void Shader::uploadMat4(char* name, glm::mat4 mt) {
     // I don't have a proper way to check that the uniform was properly retrieved
     int id = glGetUniformLocation(this->shaderProgramID, name);
+    this->useShader();
     glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(mt));
 }
 
-void Shader::uploadVec3f(char* name, glm::vec3 vc) {
+void Shader::uploadMat3(char* name, glm::mat3 mt) {
     // I don't have a proper way to check that the uniform was properly retrieved
     int id = glGetUniformLocation(this->shaderProgramID, name);
+    this->useShader();
+    glUniformMatrix3fv(id, 1, GL_FALSE, glm::value_ptr(mt));
+}
+
+void Shader::uploadVec4(char* name, glm::vec4 vc) {
+    // I don't have a proper way to check that the uniform was properly retrieved
+    int id = glGetUniformLocation(this->shaderProgramID, name);
+    this->useShader();
+    glUniform4fv(id, 1, glm::value_ptr(vc));
+} 
+
+void Shader::uploadVec3(char* name, glm::vec3 vc) {
+    // I don't have a proper way to check that the uniform was properly retrieved
+    int id = glGetUniformLocation(this->shaderProgramID, name);
+    this->useShader();
     glUniform3fv(id, 1, glm::value_ptr(vc));
+}
+
+
+void Shader::uploadFloat(char* name, GLfloat f) {
+    // I don't have a proper way to check that the uniform was properly retrieved
+    int id = glGetUniformLocation(this->shaderProgramID, name);
+    this->useShader();
+    glUniform1f(id, f);
+}
+
+void Shader::uploadInt (char* name, GLint i) {
+    // I don't have a proper way to check that the uniform was properly retrieved
+    int id = glGetUniformLocation(this->shaderProgramID, name);
+    this->useShader();
+    glUniform1i(id, i);
 }

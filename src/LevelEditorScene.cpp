@@ -79,8 +79,6 @@ void LevelEditorScene::init() {
     glEnableVertexAttribArray(1);
 
     
-    
-
 }
 LevelEditorScene::~LevelEditorScene() {
     std::cout<< "Destroying Level Editor Scene" << std::endl;
@@ -92,12 +90,14 @@ void LevelEditorScene::update(float dt, Keyboard* keyboard, Window& window) {
     int winHeight;
     glfwGetFramebufferSize(window.glWindow, &winWidth, &winHeight);
 
-   
+    //this->camera->m_position.x -= dt * 50.0f;
+    //this->camera->m_position.y -= dt * 20.0f;
 
     // Ready the pipeline
     this->defaultShader->useShader();
-    this->defaultShader->uploadMat4f("uProj", camera->getProjectionMatrix(winHeight, winWidth));
-    this->defaultShader->uploadMat4f("uView", camera->getViewMatrix());
+    this->defaultShader->uploadMat4("uProj", camera->getProjectionMatrix(winHeight, winWidth));
+    this->defaultShader->uploadMat4("uView", camera->getViewMatrix());
+    this->defaultShader->uploadFloat("uTime", glfwGetTime());
 
 
     glBindVertexArray(this->vaoID);
